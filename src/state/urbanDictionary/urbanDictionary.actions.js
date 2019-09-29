@@ -13,7 +13,7 @@ export const fetchUrbanDictionarySuccess = term => ({
   type: FETCH_URBAN_DICTIONARY_SUCCESS,
   payload: term
 });
-export const fetchUrbanDictionaryFailure = term => ({
+export const fetchUrbanDictionaryFailure = error => ({
   type: FETCH_URBAN_DICTIONARY_FAILURE,
-  payload: term
+  payload: error
 });

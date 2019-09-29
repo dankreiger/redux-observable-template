@@ -1,5 +1,5 @@
 import { httpActionTypes } from '../helpers/actionTypeFormatters';
-import { setDictionary } from '../helpers/setDictionary';
+import { clearDictionary, setDictionary } from '../helpers/dictionary';
 
 const initialState = {
   loading: false,
@@ -15,7 +15,8 @@ export function withHttpReducer(reducer, name) {
       case BEGIN:
         return {
           ...combinedState,
-          loading: true
+          loading: true,
+          error: null
         };
       case SUCCESS:
         return {
@@ -26,6 +27,7 @@ export function withHttpReducer(reducer, name) {
       case FAILURE:
         return {
           ...combinedState,
+          ...clearDictionary(),
           error: payload
         };
       default:

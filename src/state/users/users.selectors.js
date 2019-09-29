@@ -22,6 +22,11 @@ export const selectUsersLoading = createSelector(
   ({ loading }) => loading
 );
 
+export const selectUsersError = createSelector(
+  [getUsersReducer],
+  ({ error }) => error
+);
+
 export const selectCurrentUser = createSelector(
   [selectUsersDictionary, getUsersReducer],
   (users, { currentUserId }) => users[currentUserId]

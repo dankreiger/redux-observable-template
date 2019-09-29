@@ -16,6 +16,11 @@ export const selectUrbanDictionaryLoading = createSelector(
   ({ loading }) => loading
 );
 
+export const selectUrbanDictionaryError = createSelector(
+  [getUrbanDictionaryReducer],
+  ({ error }) => error
+);
+
 export const selectUrbanDictionaryItems = createSelector(
   [selectUrbanDictionary, selectUrbanDictionaryItemIds],
   (items, itemsIds) => itemsIds.map(id => items[id])

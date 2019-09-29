@@ -1,30 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { func, bool, array } from 'prop-types';
+import { any, func, bool, array } from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchUrbanDictionaryBegin } from 'state/urbanDictionary/urbanDictionary.actions';
 import { createStructuredSelector } from 'reselect';
 import {
   selectUrbanDictionaryItems,
-  selectUrbanDictionaryLoading
+  selectUrbanDictionaryLoading,
+  selectUrbanDictionaryError
 } from 'state/urbanDictionary/urbanDictionary.selectors';
 import Spinner from 'components/Spinner/Spinner';
 const UrbanDictionaryPage = ({
   fetchUrbanDictionaryBegin,
   urbanDictionaryItems,
-  loading
+  loading,
+  error
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [pristine, setPristine] = useState(true);
   const handleSearchChange = e => {
     setInputValue(e.target.value);
   };
-
+  console.log(error);
   useEffect(() => {
     fetchUrbanDictionaryBegin(inputValue);
     setPristine(false);
   }, [inputValue, fetchUrbanDictionaryBegin]);
 
   const renderDictionaryPage = () => {
+    if (error) {
+      // show error boundary
+      throw Error(error.message);
+    }
     if (loading) {
       return <Spinner />;
     }
@@ -41,6 +47,7 @@ const UrbanDictionaryPage = ({
         </div>
       ));
     }
+
     if (!pristine) {
       return <h1>no results</h1>;
     }
@@ -67,16 +74,19 @@ const UrbanDictionaryPage = ({
 UrbanDictionaryPage.propTypes = {
   urbanDictionaryItems: array,
   fetchUrbanDictionaryBegin: func.isRequired,
-  loading: bool.isRequired
+  loading: bool.isRequired,
+  error: any
 };
 
 UrbanDictionaryPage.defaultProps = {
-  urbanDictionaryItems: []
+  urbanDictionaryItems: [],
+  error: null
 };
 
 const mapStateToProps = createStructuredSelector({
   urbanDictionaryItems: selectUrbanDictionaryItems,
-  loading: selectUrbanDictionaryLoading
+  loading: selectUrbanDictionaryLoading,
+  error: selectUrbanDictionaryError
 });
 
 export default connect(
