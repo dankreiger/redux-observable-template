@@ -13,23 +13,23 @@ import UserSelectButton from 'components/UserSelectButton/UserSelectButton';
 import UserDetails from 'components/UserDetails/UserDetails';
 import UserProptypes from 'types/User.proptypes';
 import Spinner from 'components/Spinner/Spinner';
+import { fetchReposListBegin } from 'state/repos/repos.actions';
 
 const UsersPage = ({
   currentUserId,
   userList,
   loading,
   fetchUsersListBegin,
-  fetchUsersListReposBegin
+  fetchReposListBegin
 }) => {
   useEffect(() => {
     fetchUsersListBegin();
   }, [fetchUsersListBegin]);
   return (
     <UsersWrapper>
-      {/* <div>
-        <button onClick={fetchUsersListReposBegin}>show all repos</button>
-      </div> */}
       <div>
+        {/* <button onClick={fetchReposListBegin}>show all repos</button> */}
+
         {userList.map(user => (
           <UserSelectButton key={user.id} user={user} />
         ))}
@@ -46,7 +46,8 @@ UsersPage.propTypes = {
   currentUserId: UserProptypes,
   userList: arrayOf(UserProptypes),
   loading: bool,
-  fetchUsersListBegin: func.isRequired
+  fetchUsersListBegin: func.isRequired,
+  fetchReposListBegin: func.isRequired
 };
 
 UsersPage.defaultProps = {
@@ -63,5 +64,5 @@ const mapStateToProps = createStructuredSelector({
 
 export default connect(
   mapStateToProps,
-  { fetchUsersListBegin }
+  { fetchUsersListBegin, fetchReposListBegin }
 )(UsersPage);

@@ -6,7 +6,7 @@ import { fetchUsersListSuccess, fetchUsersListFailure } from './users.actions';
 import { FETCH_USERS_LIST_BEGIN } from './users.constants';
 import { userListSchema } from './users.schema';
 
-const usersListUrl = process.env.REACT_APP_USERS_LIST_URL;
+const usersListUrl = `${process.env.REACT_APP_URL}/users`;
 
 export function fetchUsersListEpic(action$) {
   return action$.pipe(

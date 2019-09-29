@@ -1,3 +1,9 @@
+import {
+  FETCH_REPOS_LIST_BEGIN,
+  FETCH_REPOS_LIST_SUCCESS,
+  FETCH_REPOS_LIST_FAILURE
+} from './repos.constants';
+
 /**
  * @typedef {import('redux').AnyAction} ReposAction
  */
@@ -16,8 +22,7 @@
 const repoInitialState = {
   byId: {},
   allIds: [],
-  loading: false,
-  currentRepoId: null
+  loading: false
 };
 
 /**
@@ -29,6 +34,24 @@ const repoInitialState = {
 const repos = (state = repoInitialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case FETCH_REPOS_LIST_BEGIN:
+      return {
+        ...state,
+        loading: true
+      };
+    case FETCH_REPOS_LIST_SUCCESS:
+      return {
+        ...state,
+        byId: payload.entities.repos,
+        allIds: payload.result,
+        loading: false
+      };
+    case FETCH_REPOS_LIST_FAILURE:
+      return {
+        ...state,
+        error: payload
+      };
+
     default:
       return state;
   }

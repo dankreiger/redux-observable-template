@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"REACT_APP_USERS_LIST_URL=http://localhost:4000/users yarn start\"",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"REACT_APP_URL=http://localhost:4000 yarn start\"",
     "eject": "react-scripts eject",
     "server": "json-server --watch db.json --port 4000",
     "sort": "sort-package-json",
