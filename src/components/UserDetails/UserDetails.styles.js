@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const UserDetailsWrapper = styled.div`
-  position: fixed;
   width: 92%;
   max-width: 300px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -10,6 +9,9 @@ export const UserDetailsWrapper = styled.div`
   background: white;
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  @media (min-width: 550px) {
+    position: fixed;
   }
 `;
 
