@@ -1,53 +1,67 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { arrayOf, bool, func } from 'prop-types';
-import { fetchUserListBegin } from 'actions';
-import * as selectors from 'selectors';
+import { fetchUsersListBegin } from 'state/users/users.actions';
+import {
+  selectUsersList,
+  selectLoading,
+  selectCurrentUser
+} from 'state/users/users.selectors';
 import { createStructuredSelector } from 'reselect';
 import { UsersWrapper } from './UsersPage.styles';
 import UserSelectButton from 'components/UserSelectButton/UserSelectButton';
 import UserDetails from 'components/UserDetails/UserDetails';
 import UserProptypes from 'types/User.proptypes';
+import Spinner from 'components/Spinner/Spinner';
 
-const UsersPage = ({ currentUser, userList, loading, fetchUserListBegin }) => {
+const UsersPage = ({
+  currentUserId,
+  userList,
+  loading,
+  fetchUsersListBegin,
+  fetchUsersListReposBegin
+}) => {
   useEffect(() => {
-    fetchUserListBegin();
-  }, [fetchUserListBegin]);
+    fetchUsersListBegin();
+  }, [fetchUsersListBegin]);
   return (
     <UsersWrapper>
+      {/* <div>
+        <button onClick={fetchUsersListReposBegin}>show all repos</button>
+      </div> */}
       <div>
         {userList.map(user => (
           <UserSelectButton key={user.id} user={user} />
         ))}
       </div>
       <div>
-        {loading && <h3>loading...</h3>}
-        {currentUser && <UserDetails user={currentUser} />}
+        {loading && <Spinner />}
+        {currentUserId && <UserDetails user={currentUserId} />}
       </div>
     </UsersWrapper>
   );
 };
 
 UsersPage.propTypes = {
-  currentUser: UserProptypes,
+  currentUserId: UserProptypes,
   userList: arrayOf(UserProptypes),
   loading: bool,
-  fetchUserListBegin: func.isRequired
+  fetchUsersListBegin: func.isRequired
 };
 
 UsersPage.defaultProps = {
   loading: false,
-  currentUser: null,
+  currentUserId: null,
   userList: null
 };
 
 const mapStateToProps = createStructuredSelector({
-  userList: selectors.selectUserList,
-  loading: selectors.selectLoading,
-  currentUser: selectors.selectCurrentUser
+  userList: selectUsersList,
+  loading: selectLoading,
+  currentUserId: selectCurrentUser
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUserListBegin }
+  { fetchUsersListBegin }
 )(UsersPage);

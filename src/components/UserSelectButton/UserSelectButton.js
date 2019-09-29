@@ -1,7 +1,7 @@
 import React from 'react';
 import { func } from 'prop-types';
 import { connect } from 'react-redux';
-import { setCurrentUser } from 'actions';
+import { setCurrentUser } from 'state/users/users.actions';
 
 import { UserSelectButtonWrapper } from './UserSelectButton.styles';
 import { Button } from 'puppy-components';

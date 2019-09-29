@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 
-import store from './store/store';
+import store from './state/store';
 
 import './index.css';
-import App from './App/App';
+import App from './app/App';
 import * as serviceWorker from './serviceWorker';
+// import { repos as allRepos } from './repos.data';
+// import { normalize, schema } from 'normalizr';
+
+// const repos = allRepos.flat();
+// const repoSchema = new schema.Entity('repos');
+// const repoListSchema = [repoSchema];
+// const repoDictionary = normalize(repos, repoListSchema);
+// console.group('repoDictionary');
+// console.log(repoDictionary);
+// console.groupEnd();
 
 /* using hash router for static deploy */
 ReactDOM.render(
