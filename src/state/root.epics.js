@@ -1,5 +1,10 @@
 import { combineEpics } from 'redux-observable';
-import { fetchUsersListEpic } from './users/users.epics';
-import { fetchReposListEpic } from './repos/repos.epics';
+import { fetchUsersEpic } from './users/users.epics';
+import { fetchReposEpic } from './repos/repos.epics';
+import { fetchUrbanDictionaryEpic } from './urbanDictionary/urbanDictionary.epics';
 
-export const rootEpic = combineEpics(fetchUsersListEpic, fetchReposListEpic);
+export const rootEpic = combineEpics(
+  fetchUsersEpic,
+  fetchReposEpic,
+  fetchUrbanDictionaryEpic
+);

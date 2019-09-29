@@ -1,21 +1,21 @@
 import {
-  FETCH_USERS_LIST_BEGIN,
-  FETCH_USERS_LIST_SUCCESS,
-  FETCH_USERS_LIST_FAILURE,
+  FETCH_USERS_BEGIN,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
   SET_CURRENT_USER_ID
 } from './users.constants';
 
-export const fetchUsersListBegin = login => ({
-  type: FETCH_USERS_LIST_BEGIN,
+export const fetchUsersBegin = login => ({
+  type: FETCH_USERS_BEGIN,
   payload: login
 });
 
-export const fetchUsersListSuccess = response => ({
-  type: FETCH_USERS_LIST_SUCCESS,
+export const fetchUsersSuccess = response => ({
+  type: FETCH_USERS_SUCCESS,
   payload: response
 });
-export const fetchUsersListFailure = error => ({
-  type: FETCH_USERS_LIST_FAILURE,
+export const fetchUsersFailure = error => ({
+  type: FETCH_USERS_FAILURE,
   payload: error
 });
 

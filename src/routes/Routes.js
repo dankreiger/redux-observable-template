@@ -3,6 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import Spinner from 'components/Spinner/Spinner';
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 const UsersPage = lazy(() => import('pages/UsersPage/UsersPage'));
+const UrbanDictionaryPage = lazy(() =>
+  import('pages/UrbanDictionaryPage/UrbanDictionaryPage')
+);
 
 const Routes = () => {
   return (
@@ -10,7 +13,7 @@ const Routes = () => {
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
           <Route exact path="/" component={UsersPage} />
-          {/* <Route path="/stories" component={StoriesPage} /> */}
+          <Route path="/urban" component={UrbanDictionaryPage} />
         </Suspense>
       </ErrorBoundary>
     </Switch>

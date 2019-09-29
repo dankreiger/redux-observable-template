@@ -1,19 +1,19 @@
 import {
-  FETCH_REPOS_LIST_BEGIN,
-  FETCH_REPOS_LIST_SUCCESS,
-  FETCH_REPOS_LIST_FAILURE
+  FETCH_REPOS_BEGIN,
+  FETCH_REPOS_SUCCESS,
+  FETCH_REPOS_FAILURE
 } from './repos.constants';
 
-export const fetchReposListBegin = login => ({
-  type: FETCH_REPOS_LIST_BEGIN,
+export const fetchReposBegin = login => ({
+  type: FETCH_REPOS_BEGIN,
   payload: login
 });
 
-export const fetchReposListSuccess = response => ({
-  type: FETCH_REPOS_LIST_SUCCESS,
+export const fetchReposSuccess = response => ({
+  type: FETCH_REPOS_SUCCESS,
   payload: response
 });
-export const fetchReposListFailure = error => ({
-  type: FETCH_REPOS_LIST_FAILURE,
+export const fetchReposFailure = error => ({
+  type: FETCH_REPOS_FAILURE,
   payload: error
 });

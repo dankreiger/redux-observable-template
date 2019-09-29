@@ -1,76 +1,85 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, bool, func, number } from 'prop-types';
-import { animated, useTrail } from 'react-spring';
-import { fetchUsersListBegin } from 'state/users/users.actions';
+import { arrayOf, bool, func } from 'prop-types';
 import {
-  selectUsersList,
-  selectLoading,
-  selectCurrentUser,
-  selectUsersIds
+  animated,
+  useTransition,
+  useSpring,
+  useChain,
+  config
+} from 'react-spring';
+
+import { fetchUsersBegin } from 'state/users/users.actions';
+
+import {
+  selectUsers,
+  selectUsersLoading,
+  selectCurrentUser
 } from 'state/users/users.selectors';
 import { createStructuredSelector } from 'reselect';
-import { UsersWrapper } from './UsersPage.styles';
+import UserProptypes from 'types/User.proptypes';
+
+import {
+  UsersWrapper,
+  UsersPageSelectButtonsWrapper
+} from './UsersPage.styles';
 import UserSelectButton from 'components/UserSelectButton/UserSelectButton';
 import UserDetails from 'components/UserDetails/UserDetails';
-import UserProptypes from 'types/User.proptypes';
 import Spinner from 'components/Spinner/Spinner';
-import { fetchReposListBegin } from 'state/repos/repos.actions';
 
-const UsersPage = ({
-  currentUserId,
-  usersList,
-  usersIds,
-  loading,
-  fetchUsersListBegin,
-  fetchReposListBegin
-}) => {
-  const [on, toggle] = useState(false);
+const UsersPage = ({ currentUserId, users, loading, fetchUsersBegin }) => {
+  const [open, set] = useState(false);
 
-  useEffect(() => {
-    fetchUsersListBegin();
-  }, [fetchUsersListBegin]);
-
-  useEffect(() => {
-    if (Object.keys(usersList).length) {
-      toggle(true);
-    }
-  }, [usersList, on]);
-
-  const config = { mass: 5, tension: 2000, friction: 200 };
-  const trail = useTrail(usersIds.length, {
-    config,
-    opacity: toggle ? 1 : 0,
-    x: toggle ? 0 : 20,
-    height: toggle ? 80 : 0,
-    margin: 20,
-    from: { opacity: 0, x: 20, height: 0 }
+  const springRef = useRef();
+  const transRef = useRef();
+  const { size, opacity, ...rest } = useSpring({
+    ref: springRef,
+    config: config.stiff,
+    from: { size: '20%', background: 'hotpink' },
+    to: { size: open ? '100%' : '20%', background: open ? 'white' : 'hotpink' }
   });
+  const transitions = useTransition(open ? users : [], item => item.id, {
+    ref: transRef,
+    unique: true,
+    trail: 400 / users.length,
+    from: { opacity: 0, transform: 'scale(0)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 0, transform: 'scale(0)' }
+  });
+
+  useEffect(() => {
+    fetchUsersBegin();
+  }, [fetchUsersBegin]);
+
+  useEffect(() => {
+    if (Object.keys(users).length) {
+      set(true);
+    }
+  }, [users, open]);
+
+  useChain(open ? [springRef, transRef] : [transRef, springRef], [
+    0,
+    open ? 0.1 : 0.6
+  ]);
+
   return (
     <UsersWrapper>
-      <div
+      <UsersPageSelectButtonsWrapper
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gridGap: '20px'
+          ...rest,
+          width: size,
+          height: size
         }}
       >
-        {/* <button onClick={fetchReposListBegin}>show all repos</button> */}
-
-        {trail.map(({ x, height, ...rest }, index) => (
-          <animated.div
-            key={usersList[index].id}
-            style={{
-              ...rest,
-              transform: x.interpolate(x => `translate3d(0,${x}px,0)`)
-            }}
-          >
-            <animated.div style={{ height }}>
-              <UserSelectButton user={usersList[index]} />
+        {/* <button onClick={fetchReposBegin}>show all repos</button> */}
+        {transitions.map(({ item, key, props }) => {
+          return (
+            <animated.div key={key} style={{ ...props }}>
+              <UserSelectButton user={item} />
             </animated.div>
-          </animated.div>
-        ))}
-      </div>
+          );
+        })}
+      </UsersPageSelectButtonsWrapper>
       <div>
         {loading && <Spinner />}
         {currentUserId && <UserDetails user={currentUserId} />}
@@ -81,27 +90,24 @@ const UsersPage = ({
 
 UsersPage.propTypes = {
   currentUserId: UserProptypes,
-  usersList: arrayOf(UserProptypes),
-  usersIds: arrayOf(number),
+  users: arrayOf(UserProptypes),
   loading: bool,
-  fetchUsersListBegin: func.isRequired,
-  fetchReposListBegin: func.isRequired
+  fetchUsersBegin: func.isRequired
 };
 
 UsersPage.defaultProps = {
   loading: false,
   currentUserId: null,
-  userList: null
+  users: null
 };
 
 const mapStateToProps = createStructuredSelector({
-  usersList: selectUsersList,
-  usersIds: selectUsersIds,
-  loading: selectLoading,
+  users: selectUsers,
+  loading: selectUsersLoading,
   currentUserId: selectCurrentUser
 });
 
 export default connect(
   mapStateToProps,
-  { fetchUsersListBegin, fetchReposListBegin }
+  { fetchUsersBegin }
 )(UsersPage);

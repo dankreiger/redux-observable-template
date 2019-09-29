@@ -12,3 +12,9 @@ export const UsersWrapper = styled.div`
     grid-template-columns: 2fr 1fr;
   }
 `;
+
+export const UsersPageSelectButtonsWrapper = styled.div`
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fill, 230px);
+`;

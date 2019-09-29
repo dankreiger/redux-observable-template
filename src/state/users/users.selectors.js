@@ -12,12 +12,12 @@ export const selectUsersIds = createSelector(
   ({ allIds }) => allIds
 );
 
-export const selectUsersList = createSelector(
+export const selectUsers = createSelector(
   [selectUsersDictionary, selectUsersIds],
   (users, userIds) => userIds.map(id => users[id])
 );
 
-export const selectLoading = createSelector(
+export const selectUsersLoading = createSelector(
   [getUsersReducer],
   ({ loading }) => loading
 );

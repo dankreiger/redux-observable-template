@@ -1,8 +1,10 @@
 import {
-  FETCH_REPOS_LIST_BEGIN,
-  FETCH_REPOS_LIST_SUCCESS,
-  FETCH_REPOS_LIST_FAILURE
+  FETCH_REPOS_BEGIN,
+  FETCH_REPOS_SUCCESS,
+  FETCH_REPOS_FAILURE,
+  reposReducerName as name
 } from './repos.constants';
+import { withHttpReducer } from 'state/utils/higherOrderReducers/withHttpReducer.reducer';
 
 /**
  * @typedef {import('redux').AnyAction} ReposAction
@@ -26,35 +28,34 @@ const repoInitialState = {
 };
 
 /**
- * @function users
- * @type {import('redux').Reducer<UsersState, UsersAction>}
- * @param {UsersState} state
- * @param {UsersAction} action
+ * @function repos
+ * @type {import('redux').Reducer<ReposState, ReposAction>}
+ * @param {ReposState} state
+ * @param {ReposAction} action
  */
 const repos = (state = repoInitialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_REPOS_LIST_BEGIN:
+    case FETCH_REPOS_BEGIN:
       return {
         ...state,
         loading: true
       };
-    case FETCH_REPOS_LIST_SUCCESS:
+    case FETCH_REPOS_SUCCESS:
       return {
         ...state,
         byId: payload.entities.repos,
         allIds: payload.result,
         loading: false
       };
-    case FETCH_REPOS_LIST_FAILURE:
+    case FETCH_REPOS_FAILURE:
       return {
         ...state,
         error: payload
       };
-
     default:
       return state;
   }
 };
 
-export default repos;
+export default withHttpReducer(repos, name);

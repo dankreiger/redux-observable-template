@@ -1,9 +1,8 @@
 import {
-  FETCH_USERS_LIST_BEGIN,
-  FETCH_USERS_LIST_SUCCESS,
-  FETCH_USERS_LIST_FAILURE,
-  SET_CURRENT_USER_ID
+  SET_CURRENT_USER_ID,
+  usersReducerName as name
 } from './users.constants';
+import { withHttpReducer } from 'state/utils/higherOrderReducers/withHttpReducer.reducer';
 
 /**
  * @typedef {import('redux').AnyAction} UsersAction
@@ -34,23 +33,6 @@ const usersInitialState = {
 const users = (state = usersInitialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_USERS_LIST_BEGIN:
-      return {
-        ...state,
-        loading: true
-      };
-    case FETCH_USERS_LIST_SUCCESS:
-      return {
-        ...state,
-        byId: payload.entities.users,
-        allIds: payload.result,
-        loading: false
-      };
-    case FETCH_USERS_LIST_FAILURE:
-      return {
-        ...state,
-        error: payload
-      };
     case SET_CURRENT_USER_ID:
       return {
         ...state,
@@ -61,4 +43,4 @@ const users = (state = usersInitialState, action) => {
   }
 };
 
-export default users;
+export default withHttpReducer(users, name);

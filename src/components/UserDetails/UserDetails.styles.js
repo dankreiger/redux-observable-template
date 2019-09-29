@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { animated } from 'react-spring';
 
-export const UserDetailsWrapper = styled.div`
+export const UserDetailsWrapper = styled(animated.div)`
   width: 92%;
   max-width: 300px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
