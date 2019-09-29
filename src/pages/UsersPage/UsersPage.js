@@ -63,7 +63,7 @@ const UsersPage = ({
     if (usersPresent) {
       set(true);
     }
-  }, [users, open]);
+  }, [users, open, usersPresent]);
 
   useChain(open ? [springRef, transRef] : [transRef, springRef], [
     0,
