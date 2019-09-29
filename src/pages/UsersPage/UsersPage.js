@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { arrayOf, bool, func } from 'prop-types';
+import { any, arrayOf, bool, func } from 'prop-types';
 import {
   animated,
   useTransition,
@@ -14,7 +14,8 @@ import { fetchUsersBegin } from 'state/users/users.actions';
 import {
   selectUsers,
   selectUsersLoading,
-  selectCurrentUser
+  selectCurrentUser,
+  selectUsersError
 } from 'state/users/users.selectors';
 import { createStructuredSelector } from 'reselect';
 import UserProptypes from 'types/User.proptypes';
@@ -27,7 +28,13 @@ import UserSelectButton from 'components/UserSelectButton/UserSelectButton';
 import UserDetails from 'components/UserDetails/UserDetails';
 import Spinner from 'components/Spinner/Spinner';
 
-const UsersPage = ({ currentUserId, users, loading, fetchUsersBegin }) => {
+const UsersPage = ({
+  currentUserId,
+  users,
+  loading,
+  fetchUsersBegin,
+  error
+}) => {
   const [open, set] = useState(false);
 
   const springRef = useRef();
@@ -47,12 +54,13 @@ const UsersPage = ({ currentUserId, users, loading, fetchUsersBegin }) => {
     leave: { opacity: 0, transform: 'scale(0)' }
   });
 
+  const usersPresent = useMemo(() => Object.keys(users).length, [users]);
   useEffect(() => {
     fetchUsersBegin();
   }, [fetchUsersBegin]);
 
   useEffect(() => {
-    if (Object.keys(users).length) {
+    if (usersPresent) {
       set(true);
     }
   }, [users, open]);
@@ -61,7 +69,9 @@ const UsersPage = ({ currentUserId, users, loading, fetchUsersBegin }) => {
     0,
     open ? 0.1 : 0.6
   ]);
-
+  if (error) {
+    throw new Error(error);
+  }
   return (
     <UsersWrapper>
       <UsersPageSelectButtonsWrapper
@@ -92,19 +102,22 @@ UsersPage.propTypes = {
   currentUserId: UserProptypes,
   users: arrayOf(UserProptypes),
   loading: bool,
-  fetchUsersBegin: func.isRequired
+  fetchUsersBegin: func.isRequired,
+  error: any
 };
 
 UsersPage.defaultProps = {
   loading: false,
   currentUserId: null,
-  users: null
+  users: null,
+  error: null
 };
 
 const mapStateToProps = createStructuredSelector({
   users: selectUsers,
   loading: selectUsersLoading,
-  currentUserId: selectCurrentUser
+  currentUserId: selectCurrentUser,
+  error: selectUsersError
 });
 
 export default connect(

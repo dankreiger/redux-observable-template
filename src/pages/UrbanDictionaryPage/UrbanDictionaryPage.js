@@ -29,7 +29,7 @@ const UrbanDictionaryPage = ({
   const renderDictionaryPage = () => {
     if (error) {
       // show error boundary
-      throw Error(error.message);
+      throw new Error(error.message);
     }
     if (loading) {
       return <Spinner />;
