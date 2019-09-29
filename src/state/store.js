@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import invariant from 'redux-immutable-state-invariant';
 import { createEpicMiddleware } from 'redux-observable';
 import rootReducer from './root.reducer';
-import { rootEpic } from './root.epic';
+import { rootEpic } from './root.epics';
 
 const middlewares = [];
 const epicMiddleware = createEpicMiddleware();

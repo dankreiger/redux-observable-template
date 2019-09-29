@@ -7,7 +7,6 @@ import { FETCH_USERS_LIST_BEGIN } from './users.constants';
 import { userListSchema } from './users.schema';
 
 const usersListUrl = process.env.REACT_APP_USERS_LIST_URL;
-//const repoUrl = id => `https://api.github.com/user/${id}/repos`;
 
 export function fetchUsersListEpic(action$) {
   return action$.pipe(
