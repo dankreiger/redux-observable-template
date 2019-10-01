@@ -24,7 +24,7 @@ export const selectUsersLoading = createSelector(
 
 export const selectUsersError = createSelector(
   [getUsersReducer],
-  ({ error }) => error
+  ({ httpError }) => httpError
 );
 
 export const selectCurrentUser = createSelector(

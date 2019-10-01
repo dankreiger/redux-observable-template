@@ -1,12 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { NavigationWrapper } from './Navigation.styles';
-
+import { NavigationWrapper, StyledLink } from './Navigation.styles';
+import { useLocation } from 'react-router-dom';
 const Navigation = () => {
+  const { pathname } = useLocation();
+  const paths = {
+    github: '/',
+    urban: '/urban',
+    starWars: '/star-wars'
+  };
   return (
     <NavigationWrapper>
-      <Link to="/">Github Followers</Link>
-      <Link to="/urban">Urban Dictionary</Link>
+      <StyledLink active={paths.github === pathname} to="/">
+        Github Followers
+      </StyledLink>
+      <StyledLink active={paths.urban === pathname} to="/urban">
+        Urban Dictionary
+      </StyledLink>
+      <StyledLink active={paths.starWars === pathname} to="/star-wars">
+        Star Wars
+      </StyledLink>
     </NavigationWrapper>
   );
 };

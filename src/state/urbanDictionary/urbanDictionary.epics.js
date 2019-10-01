@@ -1,13 +1,15 @@
 import { ofType } from 'redux-observable';
-import { FETCH_URBAN_DICTIONARY_BEGIN } from './urbanDictionary.constants';
+import {
+  urbanDictionaryHttpFailure,
+  urbanDictionaryHttpBegin,
+  urbanDictionaryHttpSuccess,
+  urbanDictionaryReducerName
+} from './urbanDictionary.constants';
 import { switchMap, map, debounceTime, catchError } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { normalize } from 'normalizr';
 import { urbanDictionaryListSchema } from './urbanDictionary.schema';
-import {
-  fetchUrbanDictionarySuccess,
-  fetchUrbanDictionaryFailure
-} from './urbanDictionary.actions';
+
 import { of } from 'rxjs';
 
 const {
@@ -25,16 +27,21 @@ const rxJsFetch = term => ajax.getJSON(search(term), searchHeaders);
 
 // switch map automatically cancels a pending outgoing request if another one is triggered
 // note: remove debounceTime  and type fast to see this rxjs feature in the network tab
-export function fetchUrbanDictionaryEpic(action$, state$) {
+export function fetchUrbanDictionaryEpic(action$) {
   return action$.pipe(
-    ofType(FETCH_URBAN_DICTIONARY_BEGIN),
+    ofType(urbanDictionaryHttpBegin().type),
     debounceTime(500),
     switchMap(({ payload }) =>
       rxJsFetch(payload).pipe(
         map(({ list }) => list),
         map(definitions => normalize(definitions, urbanDictionaryListSchema)),
-        map(fetchUrbanDictionarySuccess),
-        catchError(err => of(fetchUrbanDictionaryFailure(err)))
+        map(({ entities, result }) =>
+          urbanDictionaryHttpSuccess({
+            byId: entities[urbanDictionaryReducerName],
+            allIds: result
+          })
+        ),
+        catchError(err => of(urbanDictionaryHttpFailure({ err })))
       )
     )
   );

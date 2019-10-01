@@ -18,7 +18,7 @@ export const selectUrbanDictionaryLoading = createSelector(
 
 export const selectUrbanDictionaryError = createSelector(
   [getUrbanDictionaryReducer],
-  ({ error }) => error
+  ({ httpError }) => httpError
 );
 
 export const selectUrbanDictionaryItems = createSelector(

@@ -7,6 +7,8 @@ const UrbanDictionaryPage = lazy(() =>
   import('pages/UrbanDictionaryPage/UrbanDictionaryPage')
 );
 
+const StarWarsPage = lazy(() => import('pages/StarWarsPage/StarWarsPage'));
+
 const Routes = () => {
   return (
     <Switch>
@@ -14,6 +16,7 @@ const Routes = () => {
         <Suspense fallback={<Spinner />}>
           <Route exact path="/" component={UsersPage} />
           <Route path="/urban" component={UrbanDictionaryPage} />
+          <Route path="/star-wars" component={StarWarsPage} state={'saga'} />
         </Suspense>
       </ErrorBoundary>
     </Switch>

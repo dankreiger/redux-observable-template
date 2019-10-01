@@ -1,6 +1,15 @@
+import whr from 'with-http-reducer';
+
 export const usersReducerName = 'users';
 
-export const FETCH_USERS_BEGIN = '[Users] FETCH_USERS_BEGIN';
-export const FETCH_USERS_SUCCESS = '[Users] FETCH_USERS_SUCCESS';
-export const FETCH_USERS_FAILURE = '[Users] FETCH_USERS_FAILURE';
+export const usersHttpReducer = reducer =>
+  whr.withHttpReducer(reducer, usersReducerName);
+
+export const usersHttpBegin = payload =>
+  whr.httpBegin(usersReducerName, payload);
+export const usersHttpFailure = payload =>
+  whr.httpFailure(usersReducerName, payload);
+export const usersHttpSuccess = payload =>
+  whr.httpSuccess(usersReducerName, payload);
+
 export const SET_CURRENT_USER_ID = '[Users] SET_CURRENT_USER_ID';

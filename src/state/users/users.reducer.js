@@ -1,9 +1,4 @@
-import {
-  SET_CURRENT_USER_ID,
-  usersReducerName as name
-} from './users.constants';
-import { withHttpReducer } from 'state/utils/higherOrderReducers/withHttpReducer.reducer';
-
+import { SET_CURRENT_USER_ID, usersHttpReducer } from './users.constants';
 /**
  * @typedef {import('redux').AnyAction} UsersAction
  */
@@ -30,6 +25,7 @@ const usersInitialState = {
  * @param {UsersState} state
  * @param {UsersAction} action
  */
+
 const users = (state = usersInitialState, action) => {
   const { type, payload } = action;
   switch (type) {
@@ -43,4 +39,4 @@ const users = (state = usersInitialState, action) => {
   }
 };
 
-export default withHttpReducer(users, name);
+export default usersHttpReducer(users);

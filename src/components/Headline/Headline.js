@@ -1,7 +1,9 @@
 import React from 'react';
 import { Heading } from 'puppy-components';
+import { useLocation } from 'react-router-dom';
 
 const Headline = () => {
+  const { pathname } = useLocation();
   return (
     <div
       style={{
@@ -13,8 +15,10 @@ const Headline = () => {
         marginBottom: '40px'
       }}
     >
-      fix puppy components or make a new one
-      <Heading tag="h1" text="Redux Observable"></Heading>
+      <Heading
+        tag="h1"
+        text={`Redux ${pathname.includes('star-wars') ? 'Saga' : 'Observable'}`}
+      ></Heading>
     </div>
   );
 };

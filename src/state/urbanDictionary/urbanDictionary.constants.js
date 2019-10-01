@@ -1,8 +1,13 @@
+import whr from 'with-http-reducer';
+
 export const urbanDictionaryReducerName = 'urbanDictionary';
 
-export const FETCH_URBAN_DICTIONARY_BEGIN =
-  '[Urban Dictionary] FETCH_URBAN_DICTIONARY_BEGIN';
-export const FETCH_URBAN_DICTIONARY_SUCCESS =
-  '[Urban Dictionary] FETCH_URBAN_DICTIONARY_SUCCESS';
-export const FETCH_URBAN_DICTIONARY_FAILURE =
-  '[Urban Dictionary] FETCH_URBAN_DICTIONARY_FAILURE';
+export const urbanDictionaryHttpReducer = reducer =>
+  whr.withHttpReducer(reducer, urbanDictionaryReducerName);
+
+export const urbanDictionaryHttpBegin = payload =>
+  whr.httpBegin(urbanDictionaryReducerName, payload);
+export const urbanDictionaryHttpFailure = payload =>
+  whr.httpFailure(urbanDictionaryReducerName, payload);
+export const urbanDictionaryHttpSuccess = payload =>
+  whr.httpSuccess(urbanDictionaryReducerName, payload);

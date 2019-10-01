@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { any, func, bool, array } from 'prop-types';
-import { connect } from 'react-redux';
-import { fetchUrbanDictionaryBegin } from 'state/urbanDictionary/urbanDictionary.actions';
-import { createStructuredSelector } from 'reselect';
+
+import { useSelector, useDispatch } from 'react-redux';
 import {
   selectUrbanDictionaryItems,
   selectUrbanDictionaryLoading,
   selectUrbanDictionaryError
 } from 'state/urbanDictionary/urbanDictionary.selectors';
 import Spinner from 'components/Spinner/Spinner';
-const UrbanDictionaryPage = ({
-  fetchUrbanDictionaryBegin,
-  urbanDictionaryItems,
-  loading,
-  error
-}) => {
+import { urbanDictionaryHttpBegin } from 'state/urbanDictionary/urbanDictionary.constants';
+
+const UrbanDictionaryPage = () => {
   const [inputValue, setInputValue] = useState('');
   const [pristine, setPristine] = useState(true);
+  const urbanDictionaryItems = useSelector(selectUrbanDictionaryItems);
+  const loading = useSelector(selectUrbanDictionaryLoading);
+  const error = useSelector(selectUrbanDictionaryError);
+  const dispatch = useDispatch();
+
   const handleSearchChange = e => {
     setInputValue(e.target.value);
   };
   console.log(error);
   useEffect(() => {
-    fetchUrbanDictionaryBegin(inputValue);
+    dispatch(urbanDictionaryHttpBegin(inputValue));
     setPristine(false);
-  }, [inputValue, fetchUrbanDictionaryBegin]);
+  }, [inputValue, dispatch]);
 
   const renderDictionaryPage = () => {
     if (error) {
@@ -40,7 +40,10 @@ const UrbanDictionaryPage = ({
           key={item.defid}
           style={{ padding: '20px', background: '#fff', margin: '20px auto' }}
         >
-          <a href={item.permalink}>
+          <a
+            style={{ color: '#000', textDecoration: 'none' }}
+            href={item.permalink}
+          >
             <div>Word: {item.word}</div>
             <div>Definition: {item.definition}</div>
           </a>
@@ -71,25 +74,10 @@ const UrbanDictionaryPage = ({
     </div>
   );
 };
-UrbanDictionaryPage.propTypes = {
-  urbanDictionaryItems: array,
-  fetchUrbanDictionaryBegin: func.isRequired,
-  loading: bool.isRequired,
-  error: any
-};
 
 UrbanDictionaryPage.defaultProps = {
   urbanDictionaryItems: [],
   error: null
 };
 
-const mapStateToProps = createStructuredSelector({
-  urbanDictionaryItems: selectUrbanDictionaryItems,
-  loading: selectUrbanDictionaryLoading,
-  error: selectUrbanDictionaryError
-});
-
-export default connect(
-  mapStateToProps,
-  { fetchUrbanDictionaryBegin }
-)(UrbanDictionaryPage);
+export default UrbanDictionaryPage;

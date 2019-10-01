@@ -1,22 +1,15 @@
-import { urbanDictionaryReducerName as name } from './urbanDictionary.constants';
-import { withHttpReducer } from 'state/utils/higherOrderReducers/withHttpReducer.reducer';
+import { urbanDictionaryHttpReducer } from './urbanDictionary.constants';
 
 const urbanDictionaryInitialState = {
   byId: {},
-  allIds: [],
-  loading: false
+  allIds: []
 };
 const urbanDictionary = (state = urbanDictionaryInitialState, action) => {
   const { type } = action;
   switch (type) {
-    // case SET_CURRENT_USER_ID:
-    //   return {
-    //     ...state,
-    //     currentUserId: payload
-    //   };
     default:
       return state;
   }
 };
 
-export default withHttpReducer(urbanDictionary, name);
+export default urbanDictionaryHttpReducer(urbanDictionary);

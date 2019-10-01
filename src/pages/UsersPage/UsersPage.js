@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState, useRef } from 'react';
-import { connect } from 'react-redux';
-import { any, arrayOf, bool, func } from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   animated,
   useTransition,
@@ -9,16 +8,12 @@ import {
   config
 } from 'react-spring';
 
-import { fetchUsersBegin } from 'state/users/users.actions';
-
 import {
   selectUsers,
   selectUsersLoading,
   selectCurrentUser,
   selectUsersError
 } from 'state/users/users.selectors';
-import { createStructuredSelector } from 'reselect';
-import UserProptypes from 'types/User.proptypes';
 
 import {
   UsersWrapper,
@@ -27,14 +22,13 @@ import {
 import UserSelectButton from 'components/UserSelectButton/UserSelectButton';
 import UserDetails from 'components/UserDetails/UserDetails';
 import Spinner from 'components/Spinner/Spinner';
+import { usersHttpBegin } from 'state/users/users.constants';
 
-const UsersPage = ({
-  currentUserId,
-  users,
-  loading,
-  fetchUsersBegin,
-  error
-}) => {
+const UsersPage = () => {
+  const users = useSelector(selectUsers);
+  const loading = useSelector(selectUsersLoading);
+  const currentUserId = useSelector(selectCurrentUser);
+  const error = useSelector(selectUsersError);
   const [open, set] = useState(false);
 
   const springRef = useRef();
@@ -55,9 +49,10 @@ const UsersPage = ({
   });
 
   const usersPresent = useMemo(() => Object.keys(users).length, [users]);
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchUsersBegin();
-  }, [fetchUsersBegin]);
+    dispatch(usersHttpBegin());
+  }, [dispatch]);
 
   useEffect(() => {
     if (usersPresent) {
@@ -81,7 +76,6 @@ const UsersPage = ({
           height: size
         }}
       >
-        {/* <button onClick={fetchReposBegin}>show all repos</button> */}
         {transitions.map(({ item, key, props }) => {
           return (
             <animated.div key={key} style={{ ...props }}>
@@ -98,29 +92,4 @@ const UsersPage = ({
   );
 };
 
-UsersPage.propTypes = {
-  currentUserId: UserProptypes,
-  users: arrayOf(UserProptypes),
-  loading: bool,
-  fetchUsersBegin: func.isRequired,
-  error: any
-};
-
-UsersPage.defaultProps = {
-  loading: false,
-  currentUserId: null,
-  users: null,
-  error: null
-};
-
-const mapStateToProps = createStructuredSelector({
-  users: selectUsers,
-  loading: selectUsersLoading,
-  currentUserId: selectCurrentUser,
-  error: selectUsersError
-});
-
-export default connect(
-  mapStateToProps,
-  { fetchUsersBegin }
-)(UsersPage);
+export default UsersPage;
