@@ -12303,10 +12303,10 @@ which@^2.0.1, which@^2.0.2:
   dependencies:
     isexe "^2.0.0"
 
-with-http-reducer@1.1.15:
-  version "1.1.15"
-  resolved "https://registry.yarnpkg.com/with-http-reducer/-/with-http-reducer-1.1.15.tgz#a8ca339efd29dabdc7e5086820e355399ad65958"
-  integrity sha512-SU4keEJ9lDBVQiyA7no8jC8107CVdtjz9ltj62oTYzqluGLakSSqLf79TzUKzMvTfcYxU5fdM1OXhxFikzRpMA==
+with-http-reducer@1.1.18:
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/with-http-reducer/-/with-http-reducer-1.1.18.tgz#7cd5f0aaefa634fa79baa312b902743113ab251c"
+  integrity sha512-RFuwC0L4Qbc6xUa/vxbweaspsYRBkzPN9XaRK+14RNbgSbbynR/7YaduEfXp2RcT3yEzo8UlKV98Udp+dStEZQ==
 
 word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
