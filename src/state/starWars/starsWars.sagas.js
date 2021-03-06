@@ -3,27 +3,27 @@ import {
   starWarsHttpBegin,
   starWarsHttpSuccess,
   starWarsReducerName,
-  starWarsHttpSuccessFailure
+  starWarsHttpSuccessFailure,
 } from './starWars.constants';
 import { normalize } from 'normalizr';
 import { starWarsListSchema } from './starWars.schema';
 
-const api = url => fetch(url).then(res => res.json());
+const api = (url) => fetch(url).then((res) => res.json());
 export function* fetchStarWarsBeginAsync({ payload }) {
   try {
-    const { results } = yield call(api, `https://swapi.co/api/${payload}`);
+    const { results } = yield call(api, `https://swapi.dev/api/${payload}`);
     const starWarsDictionary = yield normalize(results, starWarsListSchema);
 
     yield put(
       starWarsHttpSuccess({
         byId: starWarsDictionary.entities[starWarsReducerName],
-        allIds: starWarsDictionary.result
+        allIds: starWarsDictionary.result,
       })
     );
   } catch (e) {
     yield put(
       starWarsHttpSuccessFailure({
-        e
+        e,
       })
     );
   }

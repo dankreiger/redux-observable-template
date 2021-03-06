@@ -8,19 +8,16 @@ import store from './state/store';
 import './index.css';
 import App from './App/App';
 import * as serviceWorker from './serviceWorker';
+import { PRODUCTION } from 'config';
+
+const Router = PRODUCTION ? HashRouter : BrowserRouter;
 
 /* using hash router for static deploy */
 ReactDOM.render(
   <Provider store={store}>
-    {process.env.NODE_ENV === 'production' ? (
-      <HashRouter basename="/">
-        <App />
-      </HashRouter>
-    ) : (
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    )}
+    <Router basename="/">
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

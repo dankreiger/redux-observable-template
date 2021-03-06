@@ -6,23 +6,23 @@ import {
   usersHttpBegin,
   usersHttpSuccess,
   usersHttpFailure,
-  usersReducerName
+  usersReducerName,
 } from './users.constants';
 import { usersSchema } from './users.schema';
 import { of } from 'rxjs';
 import { setDictionary } from 'state/utils/dictionary';
 
-const usersUrl = `${process.env.REACT_APP_URL}/users`;
+const usersUrl = `https://api.github.com/users/dankreiger/following`;
 export function fetchUsersEpic(action$) {
   return action$.pipe(
     ofType(usersHttpBegin().type),
     switchMap(() => {
       return ajax.getJSON(usersUrl).pipe(
-        map(users => normalize(users, usersSchema)),
-        map(payload =>
+        map((users) => normalize(users, usersSchema)),
+        map((payload) =>
           usersHttpSuccess(setDictionary(payload, usersReducerName))
         ),
-        catchError(err => of(usersHttpFailure({ err })))
+        catchError((err) => of(usersHttpFailure({ err })))
       );
     })
   );

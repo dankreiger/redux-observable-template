@@ -1,4 +1,13 @@
-### Todo:
+# Redux observable (and saga) example
+
+## Start
+
+```sh
+yarn     # install
+yarn start # start
+```
+
+## Todo
 
 - add more epics/rxjs examples
 - fix puppy-components so that they are more usable
