@@ -9826,7 +9826,7 @@ react-dev-utils@^11.0.3:
     strip-ansi "6.0.0"
     text-table "0.2.0"
 
-react-dom@^17.0.1:
+react-dom@17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
   integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
@@ -9979,7 +9979,7 @@ react-test-renderer@^16.0.0-0:
     react-is "^16.8.6"
     scheduler "^0.19.1"
 
-react@^17.0.1:
+react@17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
   integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
@@ -12303,7 +12303,7 @@ which@^2.0.1, which@^2.0.2:
   dependencies:
     isexe "^2.0.0"
 
-with-http-reducer@^1.1.15:
+with-http-reducer@1.1.15:
   version "1.1.15"
   resolved "https://registry.yarnpkg.com/with-http-reducer/-/with-http-reducer-1.1.15.tgz#a8ca339efd29dabdc7e5086820e355399ad65958"
   integrity sha512-SU4keEJ9lDBVQiyA7no8jC8107CVdtjz9ltj62oTYzqluGLakSSqLf79TzUKzMvTfcYxU5fdM1OXhxFikzRpMA==
