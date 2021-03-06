@@ -6,7 +6,7 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import store from './state/store';
 
 import './index.css';
-import App from './app/App';
+import App from './App/App';
 import * as serviceWorker from './serviceWorker';
 
 /* using hash router for static deploy */
