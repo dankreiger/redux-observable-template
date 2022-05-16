@@ -60,7 +60,7 @@
     "prettier": "2.2.1",
     "redux-devtools-extension": "2.13.9",
     "redux-immutable-state-invariant": "2.1.0",
-    "sort-package-json": "1.49.0"
+    "sort-package-json": "1.57.0"
   },
   "engines": {
     "node": ">=14"
